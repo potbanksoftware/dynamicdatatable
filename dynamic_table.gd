@@ -727,7 +727,9 @@ func _draw() -> void:
 			draw_line(Vector2(cell_x_pos, row_y_pos), Vector2(cell_x_pos, row_y_pos + row_height), grid_color)
 
 
-func _draw_progress_bar(cell_x: float, row_y: float, col: int, r_idx: int) -> void:  # `row` rinominato a `r_idx`
+func _draw_progress_bar(cell_x: float, row_y: float, col: int, r_idx: int) -> void:
+	# `row` rinominato a `r_idx`
+
 	var cell_val = 0.0  # Rinominato `cell_value`
 	if r_idx < _data.size() and col < _data[r_idx].size():
 		cell_val = _get_progress_value(_data[r_idx][col])
