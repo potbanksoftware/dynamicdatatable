@@ -8,7 +8,7 @@ DynamicDataTable is a GDScript plugin for Godot 4 that allows you to create and 
 [![Some features](https://github.com/jospic/dynamicdatatable/blob/master/main_video_features_1.png)](https://www.youtube.com/watch?v=WT5OIcFDpVk)
 
 *Click to see some features video*
- 
+
 ## Features
 
 * Dynamically create tables with customizable headers and data.
@@ -65,7 +65,7 @@ func _ready():
 	# Set table header
 	headers = ["ID|C", "Name", "Lastname", "Age|r", "Job", "City", "Date", "Task|p", "Completed|check", "Icon|image"]
 	dynamic_table.set_headers(headers)
-	
+
 	# Example data
 	data = [
 		[1, "Michael", "Smith", 34, "Engineer", "London", "10/12/2005", 0.5, 1, ico],
@@ -98,13 +98,13 @@ func _ready():
 		[28, "Ashley", "Young", 39, "Chef", "Paris", "22/05/2024", 0, 0],
 		[29, "Kevin", "Allen", 42, "Financial Analyst", "Mexico City", "08/02/2025", 0, 0],
 		[30, "Elizabeth", "King", 31, "Photographer", "Rome", "11/09/2020", 0, 0]
-	]	
+	]
 
 	# Insert data table
 	dynamic_table.set_data(data)
-	# Default sorted column 
+	# Default sorted column
 	dynamic_table.ordering_data(0, true)  # 0 -> ID column and true -> ascending order
-	
+
 	# Signals connections
 	dynamic_table.cell_selected.connect(_on_cell_selected)
 	dynamic_table.cell_right_selected.connect(_on_cell_right_selected)
@@ -116,13 +116,13 @@ func _ready():
 func _process(_delta):
 	if (Input.is_key_pressed(KEY_DELETE) and (current_selected_row >= 0 or current_multiple_selected_rows > 0)):  # add support deleting items from keyboard
 		_confirm_delete_rows()
-		
+
 # On selected cell callback
 func _on_cell_selected(row, column):
 	print("Cell selected on row ", row, ", column ", column, " Cell value: ", dynamic_table.get_cell_value(row, column), " Row value: ", dynamic_table.get_row_value(row))
 	current_selected_row = row
 	current_multiple_selected_rows = -1
-	
+
 # On right selected cell callback
 func _on_cell_right_selected(row, column, mouse_pos):
 	print("Cell right selected on row ", row, ", column ", column, " Mouse position x: ", mouse_pos.x, " y: ", mouse_pos.y)
@@ -135,20 +135,20 @@ func _on_cell_right_selected(row, column, mouse_pos):
 		else:
 			popup.set("item_1/disabled", false)
 		popup.show()
-		
+
 # On multiple rows selected
 func _on_multiple_rows_selected(rows: Array):
 	current_multiple_selected_rows = rows.size()		# number of current multiple rows selected
 	multiple_selected_rows = rows						# current multiple rows selected array
-	
+
 # On edited cell callback
 func _on_cell_edited(row, column, old_value, new_value):
 	print("Cell edited on row ", row, ", column ", column, " Old value: ", old_value, " New value: ", new_value)
-		
+
 # On clicked header cell callback
 func _on_header_clicked(column):
 	print("Header clicked on column ", column)
-	
+
 # On resized column callback
 func _on_column_resized(column, new_width):
 	print("Column ", column, " resized at width ", new_width)
@@ -159,7 +159,7 @@ func _on_popup_menu_id_pressed(id: int) -> void:
 		dynamic_table.insert_row(current_selected_row, [0, "----", "--------", "--", "-----", "-----", "01/01/2000", 0, 0])
 	else:			# Delete data row
 		_confirm_delete_rows()
-		
+
 # On confirm delete row(s)
 func _confirm_delete_rows():
 	var dialogtext = "Are you sure you want to delete %s?"
@@ -169,19 +169,19 @@ func _confirm_delete_rows():
 		confirm_popup.dialog_text = dialogtext % "this row"
 	confirm_popup.show()
 
-# On delete confirmation 
+# On delete confirmation
 func _on_confirmation_dialog_confirmed() -> void:
 	if (current_multiple_selected_rows > 0):			# multiple rows
-		multiple_selected_rows.sort_custom(func(a, b): return a > b) 
+		multiple_selected_rows.sort_custom(func(a, b): return a > b)
 		for rowidx in range (0, multiple_selected_rows.size()):
 			dynamic_table.delete_row(multiple_selected_rows[rowidx])
 		multiple_selected_rows.clear()
 	else:
 		dynamic_table.delete_row(current_selected_row)	# single row
 	dynamic_table.set_selected_cell(-1, -1)				# cancel current selection
-		
 
-```	
+
+```
 
 ## Support the Development
 
